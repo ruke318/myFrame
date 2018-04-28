@@ -8,3 +8,5 @@
  * Desc: [文件描述]
  */
 Route::get('/test', 'App\Controllers\TestController@getIndex');
+
+Route::controller('/d', 'App\Controllers\TController');
