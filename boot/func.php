@@ -1,0 +1,63 @@
+<?php
+if (!function_exists('success')){
+  /**
+   * @todo  void 返回成功json数据
+   * @param  array   $data      数据
+   * @param  string  $msg       提示信息
+   * @param  integer $code      [code码]
+   * @param  integer $http_code [http状态码]
+   * @return [type]             [json]
+   */
+  function success($data = [], $msg = 'success', $code = 1, $http_code = 200) {
+    $data = ['data' => $data, 'msg'=>$msg, 'code'=>$code];
+    header("Content-type:application/json;charset=utf-8");
+    http_response_code($http_code);
+    echo json_encode($data,JSON_UNESCAPED_UNICODE);die;
+  }
+}
+
+if (!function_exists('error')):
+  /**
+   * @todo 失败返回json
+   * @param  string  $msg       [错误提示信息]
+   * @param  integer $code      [错误码]
+   * @param  integer $http_code [http状态码]
+   * @param  array   $data      [数据]
+   * @return [type]             [json]
+   */
+  function error($msg = 'request error', $code = -1, $http_code = 200, $data = []) {
+    $data = ['data'=>$data, 'msg'=>$msg, 'code'=>$code];
+    http_response_code($http_code);
+    echo json_encode($data,JSON_UNESCAPED_UNICODE);die;
+  }
+endif;
+
+if (!function_exists('input')):
+  /**
+   * @todo 获取request参数
+   * @param  [type] $name [参数名字]
+   * @return [type]       [description]
+   */
+  function input($name = null)
+  {
+    $str = new Lib\Request;
+    if (is_null($name)) {
+      return $str->all();
+    }
+    $args = explode('.', $name);
+    $method = '';
+    if (isset($args[1])) {
+      list($method, $name) = $args;
+    }
+    switch($method) {
+      case 'get':
+        return $str->get($name);
+      case 'post':
+        return $str->post($name);
+      case 'header':
+        return $str->header($name);
+      default:
+        return $str->$name;
+    }
+  }
+endif;
