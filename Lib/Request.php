@@ -3,10 +3,28 @@ namespace Lib;
 
 class Request
 {
+    /**
+     * @var array
+     * 所有参数
+     */
     private $params;
+
+    /**
+     * @var array
+     * post参数
+     */
     private $postParams;
+
+    /**
+     * @var array
+     * get参数
+     */
     private $getParams;
 
+    /**
+     * Request constructor.
+     * 初始化绑定参数
+     */
     public function __construct() {
         $body = @file_get_contents('php://input');
         if ($body) {
@@ -17,34 +35,72 @@ class Request
         $this->getParams = array_merge($_GET, empty($body) ? [] : $body);
     }
 
+    /**
+     * @param $key
+     * @return mixed|null
+     * 设置 __get 返回params中参数
+     */
     public function __get($key) {
         return isset($this->params[$key]) ? $this->params[$key] : null;
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * 添加一个值
+     */
     public function __set($key, $value) {
         $this->params[$key] = $value;
     }
 
+    /**
+     * @param null $key
+     * @return array|mixed|null
+     * 获取get参数, 参数为空获取所有get参数
+     */
     public function get($key = null) {
         return empty($key) ? $this->getParams : (isset($this->getParams[$key]) ? $this->getParams[$key] : null);
     }
 
+    /**
+     * @param null $key
+     * @return array|mixed|null
+     * 获取 post 参数
+     */
     public function post($key = null) {
         return empty($key) ? $this->postParams : (isset($this->postParams[$key]) ? $this->postParams[$key] : null);
     }
 
+    /**
+     * @return array
+     * 获取所有参数
+     */
     public function all() {
         return isset($this->params) ? $this->params : [];
     }
 
+    /**
+     * @return string
+     * 返回当前请求方式
+     */
     public function method() {
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
+    /**
+     * @param $method
+     * @return bool
+     * 是否 method
+     */
     public function isMethod($method) {
         return strtolower($method) === $this->method();
     }
 
+    /**
+     * @param null $string
+     * @return array|mixed
+     * 获取header参数
+     */
     public function header($string = null){
         $headers = array();
         foreach($_SERVER as $key=>$value){
@@ -59,10 +115,20 @@ class Request
         return $string ? $headers[$string] : $headers;
     }
 
+    /**
+     * @return string
+     * 获取当前uri
+     */
     public function url() {
         return 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
     }
 
+    /**
+     * @param $path
+     * @param $data
+     * @param bool $append
+     * 记录日志
+     */
     public function log($path, $data, $append = true) {
         $path = trim($path);
         if (!file_exists(dirname(ROOT.'/logs/'.$path))) {

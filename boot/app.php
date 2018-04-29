@@ -12,7 +12,7 @@ spl_autoload_register(function ($func) {
 require_once ROOT . '/boot/func.php';
 
 //debug register
-include ROOT . '/boot/debug.php';
+DeBug::register();
 
 //add service to di
 Di\Di::register([

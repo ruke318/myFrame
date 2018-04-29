@@ -13,7 +13,7 @@ class TController
 {
     public function getIndex()
     {
-
+        q;
     }
 
     public function postIndex()
