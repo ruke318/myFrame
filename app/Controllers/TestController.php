@@ -10,11 +10,14 @@
 namespace App\Controllers;
 
 use Lib\Request;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class TestController
 {
     public function getIndex(Request $request)
     {
-        var_dump($request->all());
+        $id = $request->id;
+        $list = DB::table('links')->find($id);
+        return success($list);
     }
 }

@@ -5,3 +5,12 @@
  * Date: 2018/4/30
  * Time: 15:49
  */
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Link extends Model
+{
+    public $table = 'links';
+    public $timestamps = false;
+}

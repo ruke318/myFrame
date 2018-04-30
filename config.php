@@ -11,7 +11,7 @@ return [
 		'port' => 3306,
 		'user' => 'root',
 		'pwd' => 'root',
-		'dbname' => 'thinkjs'
+		'dbname' => 'crh'
 	],
 	'sqlsrv' => [
 		'host' => '127.0.0.1',

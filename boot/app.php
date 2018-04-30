@@ -1,15 +1,16 @@
 <?php
+use Illuminate\Database\Capsule\Manager as Capsule;
+
 header("charset=utf-8");
 ini_set('always_populate_raw_post_data', '-1');
 date_default_timezone_set('Asia/Shanghai');
 
 // autoload
+include ROOT.'/vendor/autoload.php';
+
 spl_autoload_register(function ($func) {
     require $func . '.php';
 });
-
-//functions
-require_once ROOT . '/boot/func.php';
 
 //debug register
 DeBug::register();
@@ -21,8 +22,13 @@ Di\Di::register([
     'cache' => \Di\Cache::class
 ]);
 
-//引入路由文件
+// Eloquent ORM
+$capsule = new Capsule;
+$capsule->addConnection(require ROOT.'/config/database.php');
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
 
+//引入路由文件
 include ROOT.'/route/web.php';
 
 //分发路由
