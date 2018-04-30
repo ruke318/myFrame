@@ -1,0 +1,11 @@
+{
+  "require": {
+    "illuminate/database": "*",
+    "doctrine/dbal": "~2.5"
+  },
+  "autoload": {
+    "files": [
+      "boot/func.php"
+    ]
+  }
+}
