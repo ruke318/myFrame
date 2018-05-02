@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by HuaTu.
  * User: 陈仁焕
@@ -7,7 +8,6 @@
  * Time: 11:33
  * Desc: [文件描述]
  */
-
 class Route
 {
     /**
@@ -15,6 +15,30 @@ class Route
      * 存放所有路由
      */
     private static $routes = [];
+
+    /**
+     * @var array
+     * 中间件存放
+     */
+    private static $middleware = [];
+
+    /**
+     * @var array
+     * 命名空间存放
+     */
+    private static $namespace = [];
+
+    /**
+     * @var array
+     * 路由前缀存放
+     */
+    private static $prefix = [];
+
+    /**
+     * @var array
+     * 允许的groups
+     */
+    private static $allowGroups = ['middleware', 'prefix', 'namespace'];
 
     /**
      * @var array
@@ -30,6 +54,10 @@ class Route
      */
     private static function addRoute($method, $path, $call)
     {
+        if (!empty(self::$prefix)) {
+            $addPath = implode('/', self::$prefix);
+            $path = '/' . trim($addPath, '/') . '/' . trim($path, '/');
+        }
         $paths = explode('/', trim($path, '/'));
         $match = [];
         $paths = array_map(function ($item, $index) use ($path, &$match) {
@@ -42,7 +70,7 @@ class Route
                 if (isset($list[1])) {
                     $regx = $list[1];
                     if (empty($regx)) {
-                        return error('check this route :`' . $path . '`');
+                        return errorDie('check this route :`' . $path . '`');
                     }
                 }
                 $match[$param] = $index;
@@ -52,9 +80,14 @@ class Route
         }, $paths, array_keys($paths));
         $path = '/' . implode('/', $paths);
         if (!empty(self::$routes) && isset(self::$routes[$method]) && array_key_exists($path, self::$routes[$method] ?: [])) {
-            return error('[' . $method . '] `' . $path . '` has been exists !');
+            return errorDie('[' . $method . '] `' . $path . '` has been exists !');
         } else {
-            self::$routes[$method][$path] = ['route' => $call, 'match' => $match];
+            if (!empty(self::$namespace) && !is_object($call)) {
+                $namespaces = '\\' . trim(implode('\\', self::$namespace));
+                $call = $namespaces . '\\' . trim($call, '\\');
+            }
+            $middleware = empty(self::$middleware) ? [] : self::$middleware;
+            self::$routes[$method][$path] = ['route' => $call, 'match' => $match, 'middleware' => $middleware];
         }
     }
 
@@ -66,7 +99,7 @@ class Route
     public static function controller($path, $controller)
     {
         if (!class_exists($controller)) {
-            return error('class `' . $controller . '` is not exists');
+            return errorDie('class `' . $controller . '` is not exists');
         }
         // get all public methods
         $funcs = get_class_methods($controller);
@@ -80,7 +113,46 @@ class Route
                 self::addRoute($method, $path . '/' . implode('_', $list), $controller . '@' . $func);
             }
         }
+    }
 
+    /**
+     * @param array $group
+     * @param Closure $call
+     * 添加组, 允许的类型在 self::$allowGroups
+     */
+    public static function group(array $group, Closure $call)
+    {
+        $ret = self::addGroups($group);
+        call_user_func($call);
+        self::removeGroups($ret);
+    }
+
+    /**
+     * @param $group
+     * @return array
+     * add groups to self::$allowGroups
+     */
+    private static function addGroups($group)
+    {
+        $ret = [];
+        foreach (self::$allowGroups as $g) {
+            if (array_key_exists($g, $group)) {
+                self::$$g[] = $group[$g];
+                $ret[] = $g;
+            }
+        }
+        return $ret;
+    }
+
+    /**
+     * @param $ret
+     * remove current groups
+     */
+    private static function removeGroups($ret)
+    {
+        foreach ($ret as $r) {
+            array_pop(self::$$r);
+        }
     }
 
     /**
@@ -90,11 +162,11 @@ class Route
      */
     public static function __callStatic($method, $arguments)
     {
-        $method = strtolower($method);;
+        $method = strtolower($method);
         if (in_array($method, self::$allowMethods)) {
             self::addRoute($method, ...$arguments);
         } else {
-            return error('not allow method ' . $method);
+            return errorDie('not allow method ' . $method);
         }
     }
 
@@ -136,22 +208,56 @@ class Route
                 } else {
                     list($controller, $fun) = explode('@', $call);
                     if (!class_exists($controller)) {
-                        return error('`class` ' . $controller . ' is not exists !', -1, 404);
+                        return errorDie('`class` ' . $controller . ' is not exists !', -1, 404);
                     }
                     if (!method_exists($controller, $fun)) {
-                        return error('method `' . $fun . '` in class `' . $controller . '` is not exists', -1, 404);
+                        return errorDie('method `' . $fun . '` in class `' . $controller . '` is not exists', -1, 404);
                     }
 
                     $request = new \Lib\Request;
+                    $middleware = $route['middleware'];
+                    if (!empty($middleware)) {
+                        foreach($middleware as $middle) {
+                            $middle = explode(':', $middle);
+                            $middleClass = 'App\\Middleware\\'.$middle[0];
+                            if (class_exists($middleClass)) {
+                                $middleArgs = [];
+                                if (isset($middle[1])) {
+                                    $middleArgs = array_filter(explode(',', $middle[1]));
+                                }
+                                array_unshift($middleArgs, function ($request) use ($controller, $args, $fun) {
+                                    foreach ($args as $key => $value) {
+                                        $request->$key = $value;
+                                    }
+                                    $args = array_values($args);
+                                    array_unshift($args, $request);
+                                    return call_user_func_array([new $controller, $fun], $args);
+                                });
+                                array_unshift($middleArgs, $request);
+                                $ret = call_user_func_array([new $middleClass, 'handle'], $middleArgs);
+                            }
+                            return self::parseEcho($ret);
+                        }
+                    }
                     foreach ($args as $key => $value) {
                         $request->$key = $value;
                     }
                     $args = array_values($args);
                     array_unshift($args, $request);
-                    return call_user_func_array([new $controller, $fun], $args);
+                    $ret = call_user_func_array([new $controller, $fun], $args);
+                    return self::parseEcho($ret);
                 }
             }
         }
-        return error('route `' . $uri . '` is not exists !', -1, 404);
+        return errorDie('route `' . $uri . '` is not exists !', -1, 404);
+    }
+
+    public static function parseEcho($ret)
+    {
+        if (is_string($ret) || is_numeric($ret)) {
+            echo $ret;
+        } else {
+            echo json_encode($ret, JSON_UNESCAPED_UNICODE);
+        }
     }
 }

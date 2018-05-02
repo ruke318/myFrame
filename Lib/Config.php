@@ -27,7 +27,7 @@ class Config
     public static function get($key)
     {
         if (empty($key)) {
-            return error('请输入参数');
+            return errorDie('请输入参数');
         }
         $keys = explode('.', $key);
         self::_init($keys[0]);
@@ -43,7 +43,7 @@ class Config
     public static function set($key, $value)
     {
         if (!isset($key) || !isset($value)) {
-            return error('必须两个参数');
+            return errorDie('必须两个参数');
         }
         $keys = explode('.', $key);
         self::_init($keys[0]);
@@ -57,7 +57,7 @@ class Config
         $ret = self::$config;
         foreach ($arr as $a) {
             if (!array_key_exists($a, $ret)) {
-                return error("config['{$key}']" . '不存在');
+                return errorDie("config['{$key}']" . '不存在');
             }
             $ret = $ret[$a];
         }
@@ -70,7 +70,7 @@ class Config
         $ret = &self::$config;
         foreach ($arr as $a) {
             if (!array_key_exists($a, $ret)) {
-                return error("config['{$key}']" . '不存在');
+                return errorDie("config['{$key}']" . '不存在');
             }
             $ret = &$ret[$a];
         }

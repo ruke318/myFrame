@@ -7,6 +7,8 @@
  * Time: 17:45
  * Desc: [文件描述]
  */
-Route::get('/test', 'App\Controllers\TestController@getIndex');
 
-Route::controller('/d', 'App\Controllers\TController');
+Route::group(['prefix' => 'api', 'namespace' => 'App\Controllers'], function () {
+    Route::get('test', 'TestController@getIndex');
+});
+

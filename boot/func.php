@@ -12,7 +12,7 @@ if (!function_exists('success')){
     $data = ['data' => $data, 'msg'=>$msg, 'code'=>$code];
     header("Content-type:application/json;charset=utf-8");
     http_response_code($http_code);
-    echo json_encode($data,JSON_UNESCAPED_UNICODE);die;
+    return json_encode($data,JSON_UNESCAPED_UNICODE);
   }
 }
 
@@ -28,9 +28,15 @@ if (!function_exists('error')):
   function error($msg = 'request error', $code = -1, $http_code = 200, $data = []) {
     $data = ['data'=>$data, 'msg'=>$msg, 'code'=>$code];
     http_response_code($http_code);
-    echo json_encode($data,JSON_UNESCAPED_UNICODE);die;
+    return json_encode($data,JSON_UNESCAPED_UNICODE);
   }
 endif;
+
+function errorDie($msg = 'request error', $code = -1, $http_code = 200, $data = []) {
+  $data = ['data'=>$data, 'msg'=>$msg, 'code'=>$code];
+  http_response_code($http_code);
+  echo json_encode($data,JSON_UNESCAPED_UNICODE);die;
+}
 
 if (!function_exists('input')):
   /**

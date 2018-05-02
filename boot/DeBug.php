@@ -61,6 +61,10 @@ class DeBug
         } else {
             $ret = $e->getMessage().' in '.$e->getFile().':'.$e->getLine().'['.$e->getCode().']';
         }
-        return error($ret);
+        if (!json_encode($ret)) {
+            echo $ret;die;
+        } else {
+            echo erorDie($ret);
+        }
     }
 }

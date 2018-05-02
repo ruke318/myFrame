@@ -17,8 +17,8 @@ class TestController
 {
     public function getIndex(Request $request)
     {
-        Config::set('database.username', 'testnbanme');
         $config = Config::get('database');
-        return success($config);
+        $list = DB::table('links')->get();
+        return success($list);
     }
 }
