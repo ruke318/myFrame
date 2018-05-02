@@ -56,9 +56,6 @@ class DeBug
      * 报告错误
      */
     public static function report($e) {
-        if (empty((array) $e)) {
-            return;
-        }
         if (is_array($e)) {
             $ret = $e['message'].' in '.$e['file'].':'.$e['line'].'['.$e['type'].']';
         } else {

@@ -9,6 +9,7 @@
  */
 namespace App\Controllers;
 
+use Lib\Config;
 use Lib\Request;
 use Illuminate\Database\Capsule\Manager as DB;
 
@@ -16,8 +17,8 @@ class TestController
 {
     public function getIndex(Request $request)
     {
-        $id = $request->id;
-        $list = DB::table('links')->find($id);
-        return success($list);
+        Config::set('database.username', 'testnbanme');
+        $config = Config::get('database');
+        return success($config);
     }
 }

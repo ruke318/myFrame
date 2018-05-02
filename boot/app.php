@@ -24,7 +24,7 @@ Di\Di::register([
 
 // Eloquent ORM
 $capsule = new Capsule;
-$capsule->addConnection(require ROOT.'/config/database.php');
+$capsule->addConnection(\Lib\Config::get('database'));
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
