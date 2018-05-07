@@ -1,31 +1,52 @@
 # PHPCr
 
 这个是我自己用来写`api`的,只有一些简单的功能
-## 路由(至少需要一个控制器和方法)  --废弃,新版路由已经完成,文档待续
+## 路由 (模仿laravel的样子, 但实际上...)
 
 
-路由是简单的通过`path`和`请求方式`来匹配的,从`index.php`开始,用服务器重写规则让url看起来更舒服一点
+目前有的方法有 `get`, `post`, `put`, `delete`, `options`, `patch`, `controller`, `group`
 
- #### 例子
+ #### 普通请求
 
- ```
- url : POST http://host/list/add
- ```
-
-解析到
-
-```
-Ctr/ListController.php => postAdd方法
-```
-
-```
-url: DELETE http://host/admin/user/address
+ ```php
+ Route::get('/test', 'TestController@getIndex');
+ Route::post('/test', function () {
+    return 123;
+ });
+ //适应正则匹配
+ Route::put('/test/{id:\d+}', 'TestController@putIndex');
+......
 ```
 
-解析到
+#### controller
 
+```php
+Route::controller('/test', 'TestController');
+//控制器中的方法 getXXX, postXXX, deleteXXX ... ...
 ```
-Ctr\admin\UserController.php => deleteAddress
+
+#### group
+
+```php
+//App\Controllers\TestController\getIndex
+Route::group(['namespace' => 'App\Controllers'], function () {
+    Route::get('test', 'TestController@getIndex');
+});
+
+// host/v4/test
+Route::group(['prefix' => 'v4'], function () {
+    Route::post('test', 'App\Controllers\TestController@postIndex');
+});
+
+// 中间件
+Route::group(['middleware' => 'TestMiddleware'], function () {
+    Route::controller('/test', 'App\Controllers\TestController');
+});
+
+// 可以单个都加
+Route::group(['middleware' => 'TestMiddleware', 'namespace' => 'App\Controllers', 'prefix' => 'prefix'], function () {
+    Route::controller('test', 'TestController');
+});
 ```
 
 # config
