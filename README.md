@@ -47,6 +47,19 @@ Route::group(['middleware' => 'TestMiddleware'], function () {
 Route::group(['middleware' => 'TestMiddleware', 'namespace' => 'App\Controllers', 'prefix' => 'prefix'], function () {
     Route::controller('test', 'TestController');
 });
+
+控制器的话, path 参数和Request被注入到控制器方法中
+ Route::put('/test/{id:\d+}', 'TestController@putIndex');
+
+use Lib\Request;
+
+class TestController
+{
+    public function putIndex(Request $request, $id)
+    {
+        return success($request->id === $id);
+    }
+}
 ```
 
 # 中间件(这样子和laravel一样, 但实现..)
@@ -81,7 +94,7 @@ class TestMiddleWare
 
 读取配置文件的类
 
-读取的文件是根目录下的`config.php`,返回的是数组
+读取的文件是根目录下的`config`目录下的文件,返回的是数组
 
 ```php
 <?php
@@ -97,7 +110,7 @@ return [
 
 #### 获取配置
 
-通过`Face\Config`类操作
+通过`Lib\Config`类操作
 
 ```php
 Config::get('redis');
@@ -124,12 +137,6 @@ Config::set('redis.pwd', 'pass');
 ```
 
 #### request
-
-对于将`request`的一些参数,放置到了`BaseController`中,这个实际上是实例化了类`Fun\String`
-
-```php
-$this->req 就能访问
-```
 
 通过`__get`和`__set`魔术方法来将参数直接绑定到对象上
 
