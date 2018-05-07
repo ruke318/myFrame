@@ -8,7 +8,6 @@
  * Desc: [文件描述]
  */
 
-Route::group(['prefix' => 'api', 'namespace' => 'App\Controllers'], function () {
-    Route::get('test', 'TestController@getIndex');
-});
+Route::get('test/{id:\d+}', 'TestController@getIndex');
+Route::controller('/test', 'TestController');
 

@@ -11,6 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Link extends Model
 {
-    public $table = 'links';
+    protected $table = 'links';
     public $timestamps = false;
 }

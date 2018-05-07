@@ -29,7 +29,9 @@ $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
 //引入路由文件
-include ROOT.'/route/web.php';
+Route::group(['namespace' => 'App\Controllers'], function () {
+    include ROOT.'/route/web.php';
+});
 
 //分发路由
 Route::dispatch();

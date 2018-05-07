@@ -64,7 +64,7 @@ class DeBug
         if (!json_encode($ret)) {
             echo $ret;die;
         } else {
-            echo erorDie($ret);
+            echo errorDie($ret);die;
         }
     }
 }

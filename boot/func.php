@@ -10,7 +10,9 @@ if (!function_exists('success')){
    */
   function success($data = [], $msg = 'success', $code = 1, $http_code = 200) {
     $data = ['data' => $data, 'msg'=>$msg, 'code'=>$code];
-    header("Content-type:application/json;charset=utf-8");
+    header("Accept:application/json;charset=utf-8");
+    header("Content-Type:application/json;charset=utf-8");
+    header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
     http_response_code($http_code);
     return json_encode($data,JSON_UNESCAPED_UNICODE);
   }
@@ -27,6 +29,9 @@ if (!function_exists('error')):
    */
   function error($msg = 'request error', $code = -1, $http_code = 200, $data = []) {
     $data = ['data'=>$data, 'msg'=>$msg, 'code'=>$code];
+    header("Accept:application/json;charset=utf-8");
+    header("Content-Type:application/json;charset=utf-8");
+    header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
     http_response_code($http_code);
     return json_encode($data,JSON_UNESCAPED_UNICODE);
   }
@@ -34,6 +39,9 @@ endif;
 
 function errorDie($msg = 'request error', $code = -1, $http_code = 200, $data = []) {
   $data = ['data'=>$data, 'msg'=>$msg, 'code'=>$code];
+  header("Accept:application/json;charset=utf-8");
+  header("Content-Type:application/json;charset=utf-8");
+  header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
   http_response_code($http_code);
   echo json_encode($data,JSON_UNESCAPED_UNICODE);die;
 }

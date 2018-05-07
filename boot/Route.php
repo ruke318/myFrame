@@ -98,11 +98,15 @@ class Route
      */
     public static function controller($path, $controller)
     {
-        if (!class_exists($controller)) {
-            return errorDie('class `' . $controller . '` is not exists');
+        if (!empty(self::$namespace)) {
+            $namespaces = '\\' . trim(implode('\\', self::$namespace));
+            $call = $namespaces . '\\' . trim($controller, '\\');
+        }
+        if (!class_exists($call)) {
+            return errorDie('class `' . $call . '` is not exists');
         }
         // get all public methods
-        $funcs = get_class_methods($controller);
+        $funcs = get_class_methods($call);
         //将每一个方法名字转成蛇形命名，获取第一个请求方式
         foreach ($funcs as $func) {
             $snakeFunc = strtolower(preg_replace('/([A-Z])/', '_$1', $func));
