@@ -49,6 +49,34 @@ Route::group(['middleware' => 'TestMiddleware', 'namespace' => 'App\Controllers'
 });
 ```
 
+# 中间件(这样子和laravel一样, 但实现..)
+
+`app\Middleware`
+
+```php
+namespace App\MiddleWare;
+
+use Closure;
+
+class TestMiddleWare
+{
+    public function handle($request, Closure $next) {
+        //前置中间件
+        $before = $request->get('before');
+        if ($before) {
+            $request->hh = 'tt';
+        }
+
+        $response = $next($request);
+        // 后置操作
+        $ret = json_decode($response);
+        $ret->test = 'middleware1';
+        return json_encode($ret);
+    }
+}
+
+```
+
 # config
 
 读取配置文件的类
