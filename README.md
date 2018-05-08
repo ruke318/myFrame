@@ -90,7 +90,7 @@ class TestMiddleWare
 
 ```
 
-# config
+## config
 
 读取配置文件的类
 
@@ -108,11 +108,12 @@ return [
 ];
 ```
 
-#### 获取配置
+#### 获取配置 (和laravel也很像...)
 
 通过`Lib\Config`类操作
 
 ```php
+// file.option
 Config::get('redis');
 ['host'=>'127.0.0.1', 'port'=> 5302, ....]
 ```
@@ -136,5 +137,50 @@ Config::set('redis', ['host'=>'10.10.10.1', 'port'=>'123','pwd'=>'pass']);
 Config::set('redis.pwd', 'pass');
 ```
 
+### ORM
+
+使用了第三方的ORM的包, laravel用的也是这个包
+
+```php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Link extends Model
+{
+    protected $table = 'links';
+    public $timestamps = false;
+}
+```
+
+### 使用
+
+```php
+Link::find(4);
+```
+
+### DB
+
+```php
+namespace App\Controllers;
+
+use App\Models\Link;
+use Lib\Request;
+use Illuminate\Database\Capsule\Manager as DB;
+
+class TestController
+{
+    public function getIndex(Request $request, $id)
+    {
+        $config = DB::table('links')->orderBy('id', 'desc')->get();
+        return success($config);
+    }
+
+    public function getTest(Request $request) {
+        $info = Link::find($request->id);
+        return success($info);
+    }
+}
+```
 
 ## 更多东西后续补全,实现一个垃圾包
