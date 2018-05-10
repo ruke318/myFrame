@@ -1,5 +1,5 @@
 <?php
-use Illuminate\Database\Capsule\Manager as Capsule;
+use think\Db;
 
 header("charset=utf-8");
 ini_set('always_populate_raw_post_data', '-1');
@@ -23,10 +23,7 @@ Di\Di::register([
 ]);
 
 // Eloquent ORM
-$capsule = new Capsule;
-$capsule->addConnection(\Lib\Config::get('database'));
-$capsule->setAsGlobal();
-$capsule->bootEloquent();
+Db::setConfig(\Lib\Config::get('database'));
 
 //引入路由文件
 Route::group(['namespace' => 'App\Controllers'], function () {

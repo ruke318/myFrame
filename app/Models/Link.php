@@ -7,10 +7,9 @@
  */
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use think\Model;
 
 class Link extends Model
 {
     protected $table = 'links';
-    public $timestamps = false;
 }

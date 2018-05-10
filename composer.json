@@ -1,7 +1,6 @@
 {
   "require": {
-    "illuminate/database": "*",
-    "doctrine/dbal": "~2.5"
+    "topthink/think-orm": "^1.2"
   },
   "autoload": {
     "files": [

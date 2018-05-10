@@ -11,18 +11,18 @@ namespace App\Controllers;
 
 use App\Models\Link;
 use Lib\Request;
-use Illuminate\Database\Capsule\Manager as DB;
+use think\Db;
 
 class TestController
 {
-    public function getIndex(Request $request, $id)
+    public function getIndex(Request $request, $id = null)
     {
-        $config = DB::table('links')->orderBy('id', 'desc')->get();
-        return success($config);
+        $info = LinK::find(26);
+        return success($info);
     }
 
     public function getTest(Request $request) {
-        $info = Link::find($request->id);
+        $info = Db::table('links')->find(3);
         return success($info);
     }
 }
