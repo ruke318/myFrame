@@ -1,7 +1,13 @@
 {
   "require": {
-    "topthink/think-orm": "^1.2"
+    "ruke318/tp-orm":"dev-master"
   },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/ruke318/tp-orm"
+    }
+  ],
   "autoload": {
     "files": [
       "boot/func.php"

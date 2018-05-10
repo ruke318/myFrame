@@ -32,5 +32,9 @@ return [
     // 数据库连接参数
     'params'      => [],
     // 数据库编码默认采用utf8
-    'charset'     => 'utf8'
+    'charset'     => 'utf8',
+    'paginate' => [
+        'pageVar' => 'page',
+        'size' => 15
+    ]
 ];

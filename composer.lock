@@ -4,21 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "72c554d8cba2d7be538da03ce8e03f47",
+    "content-hash": "ce2c5d6a295ae4209c4e47f2753552dc",
     "packages": [
         {
-            "name": "topthink/think-orm",
-            "version": "v1.2.6",
+            "name": "ruke318/tp-orm",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/top-think/think-orm.git",
-                "reference": "b4f699dd78009d0c59c29436ddbfc301664ece6a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/top-think/think-orm/b4f699dd78009d0c59c29436ddbfc301664ece6a.zip",
-                "reference": "b4f699dd78009d0c59c29436ddbfc301664ece6a",
-                "shasum": ""
+                "url": "https://github.com/ruke318/tp-orm",
+                "reference": "6f8e4b4ac69ab6837bb857323f690dcfbe940cef"
             },
             "require": {
                 "php": ">=5.6.0"
@@ -32,24 +26,25 @@
                     "src/config.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "liu21st",
-                    "email": "liu21st@gmail.com"
+                    "name": "ruke",
+                    "email": "ruke318@gmail.com"
                 }
             ],
             "description": "think orm",
-            "time": "2018-04-25T03:53:04+00:00"
+            "time": "2018-05-10T11:22:31+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "ruke318/tp-orm": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

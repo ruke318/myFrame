@@ -8,6 +8,8 @@
  * Desc: [文件描述]
  */
 
-Route::get('test/{id:\d+}', 'TestController@getIndex');
+Route::group(['middleware' => 'TestMiddleware'], function () {
+    Route::get('test/{id:\d+}', 'TestController@getIndex');
+});
 Route::controller('/test', 'TestController');
 

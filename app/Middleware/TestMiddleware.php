@@ -13,17 +13,15 @@ use Closure;
 
 class TestMiddleWare
 {
-    public function handle($request, Closure $next, $type) {
-        //前置中间件
-        $before = $request->get('before');
-        if ($before) {
-            $request->hh = 'tt';
+    public function handle($request, Closure $next)
+    {
+        $password = $request->header('password');
+        if ('pass' != $password) {
+            return error('miss password this request');
         }
-
         $response = $next($request);
-
         $ret = json_decode($response);
-        $ret->test = 'middleware1';
+        $ret->data->info->id = (int)$request->id;
         return json_encode($ret);
     }
 }

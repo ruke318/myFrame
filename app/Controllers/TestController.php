@@ -18,11 +18,11 @@ class TestController
     public function getIndex(Request $request, $id = null)
     {
         $info = LinK::find(26);
-        return success($info);
+        return success(['info' => $info, 'ip' => $request->ip()]);
     }
 
     public function getTest(Request $request) {
-        $info = Db::table('links')->find(3);
+        $info = Db::table('nav')->field('name, id')->simplePaginate(5);
         return success($info);
     }
 }
