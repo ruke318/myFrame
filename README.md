@@ -137,7 +137,7 @@ Config::set('redis', ['host'=>'10.10.10.1', 'port'=>'123','pwd'=>'pass']);
 Config::set('redis.pwd', 'pass');
 ```
 
-### ORM
+### ORM --由于速度太慢,换成了tp5的orm
 
 使用了第三方的ORM的包, laravel用的也是这个包
 
@@ -159,7 +159,7 @@ class Link extends Model
 Link::find(4);
 ```
 
-### DB
+### DB -- 由于速度原因,替换成tp5的Db
 
 ```php
 namespace App\Controllers;
