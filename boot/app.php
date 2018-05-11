@@ -6,7 +6,7 @@ ini_set('always_populate_raw_post_data', '-1');
 date_default_timezone_set('Asia/Shanghai');
 
 // composer 启动文件
-include ROOT.'/vendor/autoload.php';
+include ROOT . '/vendor/autoload.php';
 
 // 自己的调试
 DeBug::register();
@@ -23,7 +23,7 @@ Db::setConfig(\Lib\Config::get('database'));
 
 // 引入路由文件
 Route::group(['namespace' => 'App\Controllers'], function () {
-    include ROOT.'/route/web.php';
+    include ROOT . '/route/web.php';
 });
 
 // 分发路由
