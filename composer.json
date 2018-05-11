@@ -14,8 +14,8 @@
     ],
     "psr-4": {
       "App\\": "app/",
-      "Di\\": "Di/",
-      "Lib\\": "Lib/"
+      "Di\\": "di/",
+      "Lib\\": "lib/"
     },
     "classmap": ["boot/"]
   }
