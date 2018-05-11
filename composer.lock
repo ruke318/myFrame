@@ -4,7 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bf16b2c8aeb114410774b3bd11f8c04f",
     "content-hash": "ce2c5d6a295ae4209c4e47f2753552dc",
     "packages": [
         {
@@ -37,7 +36,7 @@
                 }
             ],
             "description": "think orm",
-            "time": "2018-05-10 11:54:45"
+            "time": "2018-05-10T11:54:45+00:00"
         }
     ],
     "packages-dev": [],
