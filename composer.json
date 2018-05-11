@@ -11,6 +11,12 @@
   "autoload": {
     "files": [
       "boot/func.php"
-    ]
+    ],
+    "psr-4": {
+      "App\\": "app/",
+      "Di\\": "Di/",
+      "Lib\\": "Lib/"
+    },
+    "classmap": ["boot/"]
   }
 }

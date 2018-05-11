@@ -8,10 +8,6 @@ date_default_timezone_set('Asia/Shanghai');
 // autoload
 include ROOT.'/vendor/autoload.php';
 
-spl_autoload_register(function ($func) {
-    require $func . '.php';
-});
-
 //debug register
 DeBug::register();
 

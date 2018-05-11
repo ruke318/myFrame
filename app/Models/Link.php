@@ -12,4 +12,11 @@ use think\Model;
 class Link extends Model
 {
     protected $table = 'links';
+
+    public $append = ['testKey'];
+
+    public function getTestKeyAttr($name, $item)
+    {
+        return $item['title'];
+    }
 }

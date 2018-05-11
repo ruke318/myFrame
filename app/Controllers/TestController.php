@@ -25,4 +25,11 @@ class TestController
         $info = Db::table('nav')->simplePaginate(1);
         return success($info);
     }
+
+    public function postPage(Request $request)
+    {
+        $id = $request->get('id');
+        $ret = $id ? Link::find($id) : Link::simplePaginate(3);
+        return success($ret);
+    }
 }
