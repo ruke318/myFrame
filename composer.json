@@ -1,11 +1,20 @@
 {
+  "name": "ruke318/phpcr",
+  "description": "my frame",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "ruke",
+      "email": "ruke318@gmail.com"
+    }
+  ],
   "require": {
     "ruke318/tp-orm":"dev-master"
   },
   "repositories": [
     {
       "type": "git",
-      "url": "https://github.com/ruke318/tp-orm"
+      "url": "https://github.com/ruke318/myFrame"
     }
   ],
   "autoload": {
