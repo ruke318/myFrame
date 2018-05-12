@@ -37,4 +37,9 @@ class TestController
     {
         return success($request->all());
     }
+
+    public function getFun(Request $request)
+    {
+        return success($request->all());
+    }
 }
