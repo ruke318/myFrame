@@ -32,4 +32,9 @@ class TestController
         $ret = $id ? Link::find($id) : Link::simplePaginate(3);
         return success($ret);
     }
+
+    public function putTest(Request $request)
+    {
+        return success($request->all());
+    }
 }

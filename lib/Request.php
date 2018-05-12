@@ -29,7 +29,11 @@ class Request
     {
         $body = @file_get_contents('php://input');
         if ($body) {
-            $body = json_decode($body, 1);
+            $data = json_decode($body, 1);
+            if (!$data) {
+                parse_str($body, $data);
+            }
+            $body = $data;
         }
         $this->params = array_merge($_REQUEST, empty($body) ? [] : $body);
         $this->postParams = array_merge($_POST, empty($body) ? [] : $body);
