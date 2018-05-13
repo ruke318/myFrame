@@ -10,14 +10,8 @@
   ],
   "require": {
     "php": ">=5.6.0",
-    "ruke318/tp-orm":"dev-master"
+    "ruke318/tp-orm":"1.0.2"
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/ruke318/tp-orm"
-    }
-  ],
   "autoload": {
     "files": [
       "boot/func.php"
@@ -28,5 +22,11 @@
       "Lib\\": "lib/"
     },
     "classmap": ["boot/"]
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    }
   }
 }

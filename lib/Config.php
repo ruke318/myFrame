@@ -20,7 +20,7 @@ class Config
     }
 
     /**
-     * @todo 获取配置,层级之间可以使用`.`符号分割 eg: redis.host === ['redis']['host']
+     * @desc 获取配置,层级之间可以使用`.`符号分割 eg: redis.host === ['redis']['host']
      * @param $key [string] 必须, 键值
      * @return [arr || string]
      */
@@ -36,7 +36,7 @@ class Config
     }
 
     /**
-     * @todo  暂时设置配置项的值,层级之间可以使用`.`符号分割 eg: redis.host === ['redis']['host']
+     * @desc  暂时设置配置项的值,层级之间可以使用`.`符号分割 eg: redis.host === ['redis']['host']
      * @param [string] $key 项,必须
      * @param [mix] $value 值,必须
      */

@@ -1,18 +1,24 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce2c5d6a295ae4209c4e47f2753552dc",
+    "content-hash": "4cb301760cfcc2cc5319694a6134dddf",
     "packages": [
         {
             "name": "ruke318/tp-orm",
-            "version": "dev-master",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ruke318/tp-orm",
-                "reference": "513e9443ea9a2c65c419657721dd23a9996896ff"
+                "url": "https://github.com/ruke318/tp-orm.git",
+                "reference": "e1414d95b81ffe9286e04f9454b40920c3b95243"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/ruke318/tp-orm/e1414d95b81ffe9286e04f9454b40920c3b95243.zip",
+                "reference": "e1414d95b81ffe9286e04f9454b40920c3b95243",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.6.0"
@@ -26,6 +32,7 @@
                     "src/config.php"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -36,17 +43,17 @@
                 }
             ],
             "description": "think orm",
-            "time": "2018-05-10T11:54:45+00:00"
+            "time": "2018-05-13T02:16:14+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "ruke318/tp-orm": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.6.0"
+    },
     "platform-dev": []
 }

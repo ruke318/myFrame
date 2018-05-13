@@ -1,7 +1,7 @@
 <?php
 if (!function_exists('success')){
   /**
-   * @todo  void 返回成功json数据
+   * @desc  void 返回成功json数据
    * @param  array   $data      数据
    * @param  string  $msg       提示信息
    * @param  integer $code      [code码]
@@ -20,7 +20,7 @@ if (!function_exists('success')){
 
 if (!function_exists('error')):
   /**
-   * @todo 失败返回json
+   * @desc 失败返回json
    * @param  string  $msg       [错误提示信息]
    * @param  integer $code      [错误码]
    * @param  integer $http_code [http状态码]
@@ -48,7 +48,7 @@ function errorDie($msg = 'request error', $code = -1, $http_code = 200, $data = 
 
 if (!function_exists('input')):
   /**
-   * @todo 获取request参数
+   * @desc 获取request参数
    * @param  [type] $name [参数名字]
    * @return [type]       [description]
    */
