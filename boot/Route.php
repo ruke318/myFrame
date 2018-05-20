@@ -141,7 +141,8 @@ class Route
         $ret = [];
         foreach (self::$allowGroups as $g) {
             if (array_key_exists($g, $group)) {
-                self::$$g[] = $group[$g];
+                $groupArr = self::$$g;
+                $groupArr[] = $group[$g];
                 $ret[] = $g;
             }
         }
