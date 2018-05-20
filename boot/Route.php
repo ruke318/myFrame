@@ -222,9 +222,9 @@ class Route
                     $request = new \Lib\Request;
                     $middleware = $route['middleware'];
                     if (!empty($middleware)) {
-                        foreach($middleware as $middle) {
+                        foreach ($middleware as $middle) {
                             $middle = explode(':', $middle);
-                            $middleClass = 'App\\Middleware\\'.$middle[0];
+                            $middleClass = 'App\\Middleware\\' . $middle[0];
                             if (class_exists($middleClass)) {
                                 $middleArgs = [];
                                 if (isset($middle[1])) {

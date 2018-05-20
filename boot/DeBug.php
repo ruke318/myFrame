@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by HuaTu.
  * User: 陈仁焕
@@ -13,7 +14,8 @@ class DeBug
     /**
      * 注册 debug
      */
-    public static function register() {
+    public static function register()
+    {
         error_reporting(0);
         set_exception_handler([__CLASS__, 'exception']);
         set_error_handler([__CLASS__, 'error']);
@@ -24,7 +26,8 @@ class DeBug
      * @param mixed ...$e
      * 截取 错误 处理
      */
-    public static function error (...$e) {
+    public static function error(...$e)
+    {
         $error = [
             'message' => $e[1],
             'file' => $e[2],
@@ -37,17 +40,19 @@ class DeBug
     /**
      * 截取程序中断错误
      */
-    public static function fatal () {
+    public static function fatal()
+    {
         $e = error_get_last();
         //发送警报
-        self::report((object) $e);
+        self::report((object)$e);
     }
 
     /**
      * @param $e
      * 获取异常错误
      */
-    public static function exception ($e) {
+    public static function exception($e)
+    {
         self::report($e);
     }
 
@@ -55,16 +60,19 @@ class DeBug
      * @param $e
      * 报告错误
      */
-    public static function report($e) {
+    public static function report($e)
+    {
         if (is_array($e)) {
-            $ret = $e['message'].' in '.$e['file'].':'.$e['line'].'['.$e['type'].']';
+            $ret = $e['message'] . ' in ' . $e['file'] . ':' . $e['line'] . '[' . $e['type'] . ']';
         } else {
-            $ret = $e->getMessage().' in '.$e->getFile().':'.$e->getLine().'['.$e->getCode().']';
+            $ret = $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine() . '[' . $e->getCode() . ']';
         }
         if (!json_encode($ret)) {
-            echo $ret;die;
+            echo $ret;
+            die;
         } else {
-            echo errorDie($ret);die;
+            echo errorDie($ret);
+            die;
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 use think\Db;
 
 header("charset=utf-8");
