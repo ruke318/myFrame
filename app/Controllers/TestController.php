@@ -10,6 +10,7 @@
 namespace App\Controllers;
 
 use App\Models\Link;
+use Di\Di;
 use Lib\Request;
 use think\Db;
 
@@ -17,11 +18,11 @@ class TestController
 {
     public function getIndex(Request $request, $id = null)
     {
-        $info = Link::simplePaginate(3);
-        return success(['info' => $info, 'ip' => $request->ip()]);
+        return success(['info' => $id, 'ip' => $request->ip(), 'url' => $request->url()]);
     }
 
     public function getTest(Request $request) {
+        return success(['s' => 'sš sss']);
         $info = Db::table('nav')->simplePaginate(1);
         return success($info);
     }

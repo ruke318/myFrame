@@ -43,6 +43,9 @@ class DeBug
     public static function fatal()
     {
         $e = error_get_last();
+        if (!$e) {
+            return;
+        }
         //发送警报
         self::report((object)$e);
     }

@@ -1,0 +1,4 @@
+<?php
+return [
+    'useCache' => false
+];

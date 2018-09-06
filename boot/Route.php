@@ -101,6 +101,8 @@ class Route
         if (!empty(self::$namespace)) {
             $namespaces = '\\' . trim(implode('\\', self::$namespace));
             $call = $namespaces . '\\' . trim($controller, '\\');
+        } else {
+            $call = trim($controller, '\\');
         }
         if (!class_exists($call)) {
             return errorDie('class `' . $call . '` is not exists');
@@ -141,7 +143,7 @@ class Route
         $ret = [];
         foreach (self::$allowGroups as $g) {
             if (array_key_exists($g, $group)) {
-                $groupArr = self::$$g;
+                $groupArr = &self::$$g;
                 $groupArr[] = $group[$g];
                 $ret[] = $g;
             }
